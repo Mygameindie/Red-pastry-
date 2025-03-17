@@ -7,10 +7,10 @@ body {
     height: 500vh;
     margin: 0;
     background-image: url('background.jpg');
-    background-size: 1180px 500px; /* Set the background size like before */
-    background-repeat: no-repeat; /* Prevent image repetition */
-    background-position: auto; /* Align the image properly */
-    background-attachment: auto; /* Keep it static and prevent unwanted scroll effects */
+    background-size: 1180px 500px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
     width: 100vw;
     overflow-x: hidden;
 }
@@ -46,6 +46,7 @@ body {
     border-radius: 5px;
     width: 200px;
     text-align: center;
+    transition: background 0.3s ease-in-out;
 }
 
 .main-menu button:hover {
@@ -72,6 +73,7 @@ body {
     left: 0;
     right: 0;
     margin: auto;
+    pointer-events: none;
 }
 
 /* Controls section */
@@ -83,6 +85,7 @@ body {
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
+    transition: flex-wrap 0.3s ease-in-out;
 }
 
 /* Category styling */
@@ -132,44 +135,47 @@ body {
 .controls img:hover {
     border-color: #6200ea;
 }
+
 .base-container {
     transition: all 0.3s ease-in-out;
 }
 
-.mobile-layout {
+.preset-container {
     display: flex;
-    flex-direction: column;
-    width: 90%;
-    height: auto;
-}
-
-.desktop-layout {
-    display: block;
-    width: 500px;
-    height: 400px;
-}
-
-.controls {
-    transition: flex-wrap 0.3s ease-in-out;
-}
-
-.mobile-controls {
-    flex-wrap: wrap;
-}
-
-.desktop-controls {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
     flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.preset-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: background 0.3s ease-in-out;
+}
+
+.preset-button:hover {
+    background-color: #388E3C;
 }
 
 /* Responsive Background Fix for Smaller Screens */
 @media (max-width: 600px) {
     body {
-        background-size: 600px 500px; /* Keep a smaller version of the background */
-        background-repeat: no-repeat;
-        background-position: auto;
-        background-attachment: auto;
+        background-size: 600px 500px;
         width: 100vw;
-        overflow-x: hidden;
     }
 
     .base-container {
@@ -182,8 +188,6 @@ body {
 
     .base-container img {
         width: 100%;
-        height: auto;
-        position: auto;
     }
 
     .controls {
@@ -206,76 +210,54 @@ body {
     }
 }
 
-/* Small Button Fix */
+/* Ensure base container scales with screen */
+.base-container {
+    position: relative;
+    width: 50vw; /* Adjust width dynamically */
+    max-width: 500px; /* Limit max width */
+    height: auto;
+    aspect-ratio: 5 / 4; /* Maintain aspect ratio */
+    margin: 10px auto;
+}
+
+/* Ensure images inside the base-container scale properly */
+.base-container img {
+    width: 100%;
+    height: auto;
+}
+
+/* Ensure buttons scale with the base container */
 .small-button {
     position: absolute;
-    width: 15px; /* Default size */
-    height: 15px;
+    width: 3%; /* Adjusted size dynamically */
+    height: 3%;
     background: transparent;
     border: none;
     cursor: pointer;
     opacity: 1;
+    transform: translate(-50%, -50%); /* Centering */
 }
 
-/* Default Button Positions (Large Screens) */
+/* Button Positions (Relative to Base Container) */
 .button-1 {
-    top: 340px;
-    left: 80px;
+    top: 87%; /* Adjusted using percentage */
+    left: 18.2%;
 }
 
 .button-2 {
-    top: 340px;
-    left: 344px;
+    top: 87%;
+    left: 72%;
 }
 
-
-/* Ensure buttons stay inside the base container */
-.base-container {
-    position: relative;
-    width: 500px;
-    height: 400px;
-    margin: 10px auto 0 auto;
-}
-
-/* Prevent images from blocking button clicks */
-.base-container img {
-    pointer-events: none;
-}
-
-.preset-container {
-    display: flex; /* Ensure buttons stay in a row */
-    flex-direction: row; /* Always stay horizontal */
-    justify-content: center; /* Center buttons */
-    align-items: center; /* Align properly */
-    gap: 15px; /* Spacing between buttons */
-    width: 100%; /* Full width */
-    margin-top: 20px; /* Adjust spacing */
-    flex-wrap: nowrap; /* Prevent wrapping to new lines */
-    overflow-x: auto; /* Allow scrolling if needed */
-    white-space: nowrap; /* Prevent text from wrapping */
-}
-
-.preset-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    width: 120px; /* Uniform button width */
-    text-align: center;
-    flex-shrink: 0; /* Prevent buttons from shrinking */
-}
-
-.preset-button:hover {
-    background-color: #388E3C;
-}
-
-/* Remove stacking on mobile */
+/* Responsive Scaling */
 @media (max-width: 600px) {
-    .preset-container {
-        flex-direction: row !important; /* Force horizontal layout */
-        justify-content: center;
+    .base-container {
+        width: 90vw; /* Expand width on smaller screens */
+        max-width: 400px;
+    }
+
+    .small-button {
+        width: 4%;
+        height: 4%;
     }
 }
